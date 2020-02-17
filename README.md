@@ -7,3 +7,7 @@ Linear problem:
 
 Logistic problem:
 % sumMass = X' * (g(X * theta) - y) <br/>
+
+In ex4-week5, even though I implemented the a2 incorrectly, it still gave me result somewhat correct.
+(50% slightly wrong - 50% totally right). Weird huh.
+(using sigmoidGradient(a2') instead of a2'.(1-a2'))
