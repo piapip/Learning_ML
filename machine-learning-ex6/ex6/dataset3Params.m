@@ -23,11 +23,28 @@ sigma = 0.3;
 %        mean(double(predictions ~= yval))
 %
 
+C_sample = [0.01 0.03 0.1 0.3 1 3 10 30]';
+sigma_sample = [0.01 0.03 0.1 0.3 1 3 10 30]';
 
+sample_size = length(C_sample);
+result = [];
+for c_samp = 1:sample_size
+  for sig_samp = 1:sample_size
+    model = svmTrain(X, y, C_sample(c_samp), ...
+            @(x1, x2)gaussianKernel(x1, x2, sigma_sample(sig_samp)));
+    predictions = svmPredict(model, Xval);
+    prediction_error = mean(double(predictions ~= yval));
+    % so basically, it tests out every possible C and sigma and look for 
+    % the pair with the lowest error, the idea is simple (it's exactly the same 
+    % as last week's lesson) but I swear this is not my code. 
+    % And took forever to submit PogChamp.
+    result = [result; C_sample(c_samp), sigma_sample(sig_samp), prediction_error];
+  endfor
+endfor
 
-
-
-
+[min_error min_index] = min(result(:,3));
+C = result(min_index, 1);
+sigma = result(min_index, 2);
 
 % =========================================================================
 
